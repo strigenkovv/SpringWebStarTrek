@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nieuwe bestelling - Star Trek</title>
+    <link rel="icon" href="startrek.ico">
+    <script src="nieuweBestelling.js" defer></script>
+</head>
+<body>
+    <h1>Nieuwe bestelling</h1>
+
+    <form id="bestellingForm">
+        <label for="omschrijving">Omschrijving:</label>
+        <input id="omschrijving" required>
+
+        <label for="bedrag">Bedrag:</label>
+        <input id="bedrag" type="number" min="0.01" step="0.01" required>
+
+        <button type="submit">Toevoegen</button>
+    </form>
+
+    <div id="onvoldoendeBudget" style="color: white; background-color: red; font-weight: bold;" hidden>
+        Onvoldoende budget.
+    </div>
+
+    <div id="fout" hidden>
+        Controleer de ingevoerde gegevens.
+    </div>
+
+    <div id="storing" hidden>
+        Er is een technische storing.
+    </div>
+
+    <p>
+        <a id="terug" href="index.html">Terug naar werknemer</a>
+    </p>
+</body>
+</html>

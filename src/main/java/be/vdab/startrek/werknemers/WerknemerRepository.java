@@ -5,12 +5,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.math.BigDecimal;
 
 @Repository
-class WerknemerRepository {
+public class WerknemerRepository {
     private final JdbcClient jdbcClient;
 
-    WerknemerRepository(JdbcClient jdbcClient) {
+    public WerknemerRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 
@@ -33,5 +34,15 @@ class WerknemerRepository {
                 .param(id)
                 .query(Werknemer.class)
                 .optional();
+    }
+
+    public int verminderBudget(long werknemerId, BigDecimal bedrag) {
+        return jdbcClient.sql("""
+                update werknemers
+                set budget = budget - ?
+                where id = ? and budget >= ?
+                """)
+                .params(bedrag, werknemerId, bedrag)
+                .update();
     }
 }

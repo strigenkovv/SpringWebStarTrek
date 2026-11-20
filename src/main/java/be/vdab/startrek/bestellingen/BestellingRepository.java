@@ -1,6 +1,7 @@
 package be.vdab.startrek.bestellingen;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +24,23 @@ class BestellingRepository {
                 .param(werknemerId)
                 .query(Bestelling.class)
                 .list();
+    }
+
+    long create(long werknemerId, NieuweBestelling nieuweBestelling) {
+        var keyHolder = new GeneratedKeyHolder();
+
+        jdbcClient.sql("""
+                insert into bestellingen
+                    (werknemerId, omschrijving, bedrag, moment)
+                values (?, ?, ?, now())
+                """)
+                .params(
+                        werknemerId,
+                        nieuweBestelling.omschrijving(),
+                        nieuweBestelling.bedrag()
+                )
+                .update(keyHolder);
+
+        return keyHolder.getKey().longValue();
     }
 }

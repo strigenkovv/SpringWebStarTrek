@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-class WerknemerService {
+public class WerknemerService {
     private final WerknemerRepository werknemerRepository;
 
     WerknemerService(WerknemerRepository werknemerRepository) {
@@ -18,7 +18,7 @@ class WerknemerService {
         return werknemerRepository.findAll();
     }
 
-    Werknemer findById(long id) {
+    public Werknemer findById(long id) {
         return werknemerRepository.findById(id)
                 .orElseThrow(() -> new WerknemerNietGevondenException(id));
     }
